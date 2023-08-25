@@ -4,6 +4,7 @@ using ChessChallenge.API;
 public class MyBot : IChessBot
 {
     int[] material = {0, 100, 300, 310, 500, 900};
+    int allocatedTime = 0;
 
     private int Evaluate(Board board)
     {
@@ -15,7 +16,7 @@ public class MyBot : IChessBot
         return score;
     }
 
-    private int Search(Board board, Timer timer, int allocatedTime, int depth, out Move bestMove)
+    private int Search(Board board, Timer timer, int depth, out Move bestMove)
     {
         bestMove = Move.NullMove;
 
@@ -31,7 +32,7 @@ public class MyBot : IChessBot
         foreach (Move move in moves)
         {
             board.MakeMove(move);
-            int score = -Search(board, timer, allocatedTime, depth - 1, out _);
+            int score = -Search(board, timer, depth - 1, out _);
             board.UndoMove(move);
 
             if (score > bestScore)
@@ -50,11 +51,11 @@ public class MyBot : IChessBot
     public Move Think(Board board, Timer timer)
     {
         Move bestMove = Move.NullMove;
-        int allocatedTime = timer.MillisecondsRemaining / 30;
+        allocatedTime = timer.MillisecondsRemaining / 30;
 
         for (int depth = 1;;depth++)
         {
-            Search(board, timer, allocatedTime, depth, out var move);
+            Search(board, timer, depth, out var move);
 
             if (timer.MillisecondsElapsedThisTurn > allocatedTime) break;
 
