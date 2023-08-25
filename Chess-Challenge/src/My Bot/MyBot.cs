@@ -3,7 +3,6 @@ using ChessChallenge.API;
 
 public class MyBot : IChessBot
 {
-    int allocatedTime = 0;
     private int Search(Board board, Timer timer, int depth, out Move bestMove)
     {
         bestMove = Move.NullMove;
@@ -42,7 +41,7 @@ public class MyBot : IChessBot
 
     public Move Think(Board board, Timer timer)
     {
-        allocatedTime = timer.MillisecondsRemaining / 40;
+        int allocatedTime = timer.MillisecondsRemaining / 40;
 
         Move move = Move.NullMove;
         for (int depth = 0; timer.MillisecondsElapsedThisTurn <= allocatedTime;)
