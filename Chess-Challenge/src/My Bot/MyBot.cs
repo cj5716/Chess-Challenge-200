@@ -1,5 +1,4 @@
-﻿using System; // #DEBUG
-using ChessChallenge.API;
+﻿using ChessChallenge.API;
 
 public class MyBot : IChessBot
 {
@@ -46,10 +45,7 @@ public class MyBot : IChessBot
 
         Move move = Move.NullMove;
         for (; timer.MillisecondsElapsedThisTurn <= allocatedTime;)
-        { // #DEBUG
             Search(board, timer, ++depth, out move);
-            Console.WriteLine($"depth {depth} {move}"); // #DEBUG
-        } // #DEBUG
 
         return move;
     }
