@@ -45,9 +45,9 @@ public class MyBot : IChessBot
         allocatedTime = timer.MillisecondsRemaining / 40;
 
         Move move = Move.NullMove;
-        for (int depth = 1; timer.MillisecondsElapsedThisTurn <= allocatedTime; depth++)
+        for (int depth = 0; timer.MillisecondsElapsedThisTurn <= allocatedTime;)
         {
-            Search(board, timer, depth, out move);
+            Search(board, timer, ++depth, out move);
             Console.WriteLine($"depth {depth} {move}"); // #DEBUG
         }
 
