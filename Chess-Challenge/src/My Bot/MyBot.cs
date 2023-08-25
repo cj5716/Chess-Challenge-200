@@ -7,7 +7,9 @@ public class MyBot : IChessBot
     {
         bestMove = Move.NullMove;
 
-        int score = 0;
+        int score = 0,
+            bestScore = -20000;
+
         if (depth == 0)
         {
             for (int pieceIndex = 0; ++pieceIndex <= 5;)
@@ -20,8 +22,6 @@ public class MyBot : IChessBot
         var moves = board.GetLegalMoves();
         if (moves.Length == 0)
             return board.IsInCheck() ? -10000 : 0;
-
-        int bestScore = -20000;
 
         foreach (Move move in moves)
         {
