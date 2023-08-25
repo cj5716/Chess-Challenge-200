@@ -3,7 +3,7 @@ using ChessChallenge.API;
 
 public class MyBot : IChessBot
 {
-    int[] material = {0, 159, 450, 434, 716, 1421};
+    int[] material = {0, 100, 300, 310, 500, 900};
 
     private int Evaluate(Board board)
     {
