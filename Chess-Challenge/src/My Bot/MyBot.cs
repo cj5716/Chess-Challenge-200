@@ -3,14 +3,13 @@ using ChessChallenge.API;
 
 public class MyBot : IChessBot
 {
-    int[] material = {0, 100, 300, 310, 500, 900};
     int allocatedTime = 0;
 
     private int Evaluate(Board board)
     {
         int score = 0;
         for (int pieceIndex = 0; ++pieceIndex <= 5;)
-            score += material[pieceIndex] * 
+            score += 148 * pieceIndex * 
                     (BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, board.IsWhiteToMove))
                    - BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, !board.IsWhiteToMove)));
         return score;
