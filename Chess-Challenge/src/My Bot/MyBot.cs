@@ -4,23 +4,19 @@ using ChessChallenge.API;
 public class MyBot : IChessBot
 {
     int allocatedTime = 0;
-
-    private int Evaluate(Board board)
-    {
-        int score = 0;
-        for (int pieceIndex = 0; ++pieceIndex <= 5;)
-            score += 148 * pieceIndex * 
-                    (BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, board.IsWhiteToMove))
-                   - BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, !board.IsWhiteToMove)));
-        return score;
-    }
-
     private int Search(Board board, Timer timer, int depth, out Move bestMove)
     {
         bestMove = Move.NullMove;
 
         if (depth == 0)
-            return Evaluate(board);
+        {
+            int score = 0;
+            for (int pieceIndex = 0; ++pieceIndex <= 5;)
+                score += 148 * pieceIndex * 
+                        (BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, board.IsWhiteToMove))
+                       - BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, !board.IsWhiteToMove)));
+            return score;
+        }
 
         var moves = board.GetLegalMoves();
         if (moves.Length == 0)
