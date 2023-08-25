@@ -8,9 +8,9 @@ public class MyBot : IChessBot
     {
         bestMove = Move.NullMove;
 
+        int score = 0;
         if (depth == 0)
         {
-            int score = 0;
             for (int pieceIndex = 0; ++pieceIndex <= 5;)
                 score += 148 * pieceIndex * 
                         (BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, board.IsWhiteToMove))
@@ -27,7 +27,7 @@ public class MyBot : IChessBot
         foreach (Move move in moves)
         {
             board.MakeMove(move);
-            int score = -Search(board, timer, depth - 1, out _);
+            score = -Search(board, timer, depth - 1, out _);
             board.UndoMove(move);
 
             if (score > bestScore)
