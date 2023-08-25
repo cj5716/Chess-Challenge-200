@@ -10,9 +10,9 @@ public class MyBot : IChessBot
         int score = 0;
         for (int pieceIndex = 0; ++pieceIndex <= 6;)
             score += material[pieceIndex] * 
-                    (BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, true))
-                   - BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, false)));
-        return board.IsWhiteToMove ? score : -score;
+                    (BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, board.IsWhiteToMove))
+                   - BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, !board.IsWhiteToMove)));
+        return score;
     }
 
     private int Search(Board board, Timer timer, int allocatedTime, int ply, int depth, out Move bestMove)
