@@ -35,9 +35,6 @@ public class MyBot : IChessBot
                 bestScore = score;
                 bestMove = move;
             }
-
-            if (timer.MillisecondsElapsedThisTurn > allocatedTime)
-                return bestScore;
         }
 
         return bestScore;
@@ -46,14 +43,11 @@ public class MyBot : IChessBot
     public Move Think(Board board, Timer timer)
     {
         Move bestMove = Move.NullMove;
-        allocatedTime = timer.MillisecondsRemaining / 30;
+        allocatedTime = timer.MillisecondsRemaining / 40;
 
-        for (int depth = 1;;depth++)
+        for (int depth = 1; timer.MillisecondsElapsedThisTurn <= allocatedTime; depth++)
         {
             Search(board, timer, depth, out var move);
-
-            if (timer.MillisecondsElapsedThisTurn > allocatedTime) break;
-
             bestMove = move;
             Console.WriteLine($"depth {depth} {bestMove}"); // #DEBUG
         }
