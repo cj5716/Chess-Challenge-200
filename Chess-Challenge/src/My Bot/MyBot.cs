@@ -41,7 +41,7 @@ public class MyBot : IChessBot
                 bestMove = move;
             }
 
-            if (depth > 1 && timer.MillisecondsElapsedThisTurn > allocatedTime)
+            if (timer.MillisecondsElapsedThisTurn > allocatedTime)
                 return bestScore;
         }
 
