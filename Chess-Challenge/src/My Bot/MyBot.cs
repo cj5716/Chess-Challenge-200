@@ -9,12 +9,11 @@ public class MyBot : IChessBot
     private int Evaluate(Board board)
     {
         int score = 0;
-        for (var colour = 2; --colour >= 0; score = -score)
-        {
-            for (var pieceIndex = 0; ++pieceIndex <= 6;)
-                score += material[pieceIndex] * BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, colour == 0));
-        }
-        return board.IsWhiteToMove ? -score : score;
+        for (var pieceIndex = 0; ++pieceIndex <= 6;)
+            score += material[pieceIndex] * 
+                    (BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, true))
+                   - BitboardHelper.GetNumberOfSetBits(board.GetPieceBitboard((PieceType)pieceIndex, false)));
+        return board.IsWhiteToMove ? score : -score;
     }
 
     private int Search(Board board, Timer timer, int allocatedTime, int ply, int depth)
