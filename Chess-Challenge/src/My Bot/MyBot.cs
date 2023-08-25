@@ -55,12 +55,8 @@ public class MyBot : IChessBot
         bestMove = Move.NullMove;
         var allocatedTime = timer.MillisecondsRemaining / 30;
 
-        for (var depth = 0; ++depth < 128;)
-        {
+        for (var depth = 0; ++depth < 128 && timer.MillisecondsElapsedThisTurn <= allocatedTime;)
             Search(board, timer, allocatedTime, 0, depth);
-
-            if (timer.MillisecondsElapsedThisTurn > allocatedTime) break;
-        }
 
         return bestMove;
     }
