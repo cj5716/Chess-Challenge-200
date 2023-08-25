@@ -41,10 +41,11 @@ public class MyBot : IChessBot
 
     public Move Think(Board board, Timer timer)
     {
-        int allocatedTime = timer.MillisecondsRemaining / 40;
+        int allocatedTime = timer.MillisecondsRemaining / 40,
+            depth = 0;
 
         Move move = Move.NullMove;
-        for (int depth = 0; timer.MillisecondsElapsedThisTurn <= allocatedTime;)
+        for (; timer.MillisecondsElapsedThisTurn <= allocatedTime;)
         { // #DEBUG
             Search(board, timer, ++depth, out move);
             Console.WriteLine($"depth {depth} {move}"); // #DEBUG
