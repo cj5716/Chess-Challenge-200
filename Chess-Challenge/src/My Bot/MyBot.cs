@@ -42,16 +42,15 @@ public class MyBot : IChessBot
 
     public Move Think(Board board, Timer timer)
     {
-        Move bestMove = Move.NullMove;
         allocatedTime = timer.MillisecondsRemaining / 40;
 
+        Move move = Move.NullMove;
         for (int depth = 1; timer.MillisecondsElapsedThisTurn <= allocatedTime; depth++)
         {
-            Search(board, timer, depth, out var move);
-            bestMove = move;
-            Console.WriteLine($"depth {depth} {bestMove}"); // #DEBUG
+            Search(board, timer, depth, out move);
+            Console.WriteLine($"depth {depth} {move}"); // #DEBUG
         }
 
-        return bestMove;
+        return move;
     }
 }
