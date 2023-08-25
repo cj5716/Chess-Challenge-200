@@ -15,26 +15,23 @@ public class MyBot : IChessBot
         return score;
     }
 
-    private int Search(Board board, Timer timer, int allocatedTime, int ply, int depth, out Move bestMove)
+    private int Search(Board board, Timer timer, int allocatedTime, int depth, out Move bestMove)
     {
         bestMove = Move.NullMove;
-
-        if (ply > 0 && board.IsRepeatedPosition())
-            return 0;
 
         if (depth == 0)
             return Evaluate(board);
 
         var moves = board.GetLegalMoves();
         if (moves.Length == 0)
-            return board.IsInCheck() ? ply - 10000 : 0;
+            return board.IsInCheck() ? -10000 : 0;
 
         int bestScore = -20000;
 
         foreach (Move move in moves)
         {
             board.MakeMove(move);
-            int score = -Search(board, timer, allocatedTime, ply + 1, depth - 1, out _);
+            int score = -Search(board, timer, allocatedTime, depth - 1, out _);
             board.UndoMove(move);
 
             if (score > bestScore)
@@ -57,7 +54,7 @@ public class MyBot : IChessBot
 
         for (int depth = 1;;depth++)
         {
-            Search(board, timer, allocatedTime, 0, depth, out var move);
+            Search(board, timer, allocatedTime, depth, out var move);
 
             if (timer.MillisecondsElapsedThisTurn > allocatedTime) break;
 
